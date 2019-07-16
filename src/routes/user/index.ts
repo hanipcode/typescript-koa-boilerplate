@@ -3,17 +3,29 @@ import userController from '../../controllers/user';
 import {
   InsertUserRequest,
   GenericUserByIdRequest,
+  ListAllUserResponse,
+  GenericUserResponse,
 } from '../../interfaces/user.interface';
+import { Context } from 'koa';
+import { GenericError } from '../../interfaces/genericError.intraface';
 
 const userRouter = new Router({ prefix: '/user' });
 
-userRouter.get('/', async ctx => {
+interface CtxFindAllUser extends Context {
+  body: ListAllUserResponse;
+}
+
+interface CtxGenericUser extends Context {
+  body: GenericUserResponse | GenericError;
+}
+
+userRouter.get('/', async (ctx: CtxFindAllUser) => {
   const body = await userController.listAllUser();
   ctx.body = body;
   ctx.status = body.status;
 });
 
-userRouter.post('/', async ctx => {
+userRouter.post('/', async (ctx: CtxGenericUser) => {
   const data = ctx.request.body as InsertUserRequest;
   const body = await userController.insertUser({
     username: data.username,
@@ -23,7 +35,7 @@ userRouter.post('/', async ctx => {
   ctx.status = body.status;
 });
 
-userRouter.get('/:id', async ctx => {
+userRouter.get('/:id', async (ctx: CtxGenericUser) => {
   const data = ctx.params as GenericUserByIdRequest;
   const body = await userController.findUser({
     id: data.id,
@@ -32,7 +44,7 @@ userRouter.get('/:id', async ctx => {
   ctx.status = body.status;
 });
 
-userRouter.delete('/:id', async ctx => {
+userRouter.delete('/:id', async (ctx: CtxGenericUser) => {
   const data = ctx.params as GenericUserByIdRequest;
   const body = await userController.deleteUser({
     id: data.id,

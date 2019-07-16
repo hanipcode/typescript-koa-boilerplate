@@ -4,12 +4,13 @@ import {
   GenericUserByIdRequest,
   ListAllUserResponse,
   GenericUserResponse,
-  GenericError,
+  IUser,
 } from '../../interfaces/user.interface';
+import { GenericError } from '../../interfaces/genericError.intraface';
 
 export default {
   async listAllUser(): Promise<ListAllUserResponse> {
-    const users = await models.User.find({});
+    const users: Array<IUser> = await models.User.find({});
     return {
       status: 200,
       message: '',

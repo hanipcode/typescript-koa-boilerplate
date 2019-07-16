@@ -1,3 +1,4 @@
 import User from './user';
+import Recorded from './recorded';
 
-export default { User };
+export default { User, Recorded };

@@ -3,6 +3,7 @@ import * as Koa from 'koa';
 import * as logger from 'koa-logger';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-body';
+import * as serve from 'koa-static';
 
 import routes from './routes';
 
@@ -17,7 +18,7 @@ app.use(logger());
 app.use(
   bodyParser({
     formidable: {
-      uploadDir: `${__dirname}/../static`,
+      uploadDir: `${__dirname}/../static/upload`,
       keepExtensions: true,
     },
     multipart: true,
@@ -25,6 +26,7 @@ app.use(
     json: true,
   })
 );
+app.use(serve(`${__dirname}/../static`));
 app.use(routes.routes()).use(routes.allowedMethods());
 
 startDb().then(() => {

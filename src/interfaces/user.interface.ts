@@ -1,4 +1,6 @@
-import { Document, Error } from 'mongoose';
+import { Document } from 'mongoose';
+import timestamp from './timestamp.interface';
+import { GenericResponse } from './genericResponse.interface';
 
 export interface InsertUserRequest {
   username: string;
@@ -9,23 +11,10 @@ export interface GenericUserByIdRequest {
   id: string;
 }
 
-export interface GenericError {
-  status: number;
-  error: boolean;
-  message: string;
-  stack?: Error;
-}
-
-export interface IUser extends Document {
+export interface IUser extends Document, timestamp {
   username: string;
   password: string;
   updated_at: Date;
-}
-
-export interface GenericResponse {
-  status: number;
-  message: string;
-  data: object;
 }
 
 export interface GenericUserResponse extends GenericResponse {
