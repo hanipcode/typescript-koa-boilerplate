@@ -1,3 +1,4 @@
-node_Modules
+node_modules
 dist
 recorded
+config/index
