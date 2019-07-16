@@ -1,3 +1,3 @@
 export default {
-  DB_URL: 'mongodb://localhost:27017/<dbname>',
+  DB_URL: 'mongodb://localhost:27017/recordcall',
 };
